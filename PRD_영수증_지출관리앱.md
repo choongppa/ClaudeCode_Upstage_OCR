@@ -95,7 +95,7 @@
 
 **수락 기준 (Acceptance Criteria)**:
 - [ ] JPG, PNG, PDF 파일이 정상 업로드된다.
-- [ ] 10MB 초과 파일은 오류 메시지를 표시하고 업로드를 차단한다.
+- [x] 10MB 초과 파일은 오류 메시지를 표시하고 업로드를 차단한다.
 - [ ] 지원하지 않는 형식(예: .gif, .docx) 업로드 시 오류 메시지를 표시한다.
 - [ ] 업로드 진행 중 로딩 상태가 UI에 표시된다.
 
@@ -979,9 +979,9 @@ SYSTEM_PROMPT = """
 | 2-4-4 | 오류 처리 | 400 (파일 오류), 500 (OCR 실패) HTTPException |
 
 #### 완료 기준
-- [ ] `curl -X POST /api/upload -F "file=@receipt.jpg"` 실행 시 구조화 JSON이 반환된다
-- [ ] 10MB 초과 파일 업로드 시 400 오류가 반환된다
-- [ ] PDF 파일 업로드 시 정상적으로 파싱된다
+- [x] `curl -X POST /api/upload -F "file=@receipt.jpg"` 실행 시 구조화 JSON이 반환된다
+- [x] 10MB 초과 파일 업로드 시 400 오류가 반환된다
+- [x] PDF 파일 업로드 시 정상적으로 파싱된다
 
 ---
 
@@ -1014,9 +1014,9 @@ SYSTEM_PROMPT = """
 ```
 
 #### 완료 기준
-- [ ] Postman으로 5개 엔드포인트(`POST /upload`, `GET/DELETE/PUT /expenses`, `GET /summary`) 전체 정상 응답 확인
-- [ ] `GET /api/expenses?from=2025-07-01&to=2025-07-31` 날짜 필터가 동작한다
-- [ ] 존재하지 않는 ID로 DELETE 시 404가 반환된다
+- [x] Postman으로 5개 엔드포인트(`POST /upload`, `GET/DELETE/PUT /expenses`, `GET /summary`) 전체 정상 응답 확인
+- [x] `GET /api/expenses?from=2025-07-01&to=2025-07-31` 날짜 필터가 동작한다
+- [x] 존재하지 않는 ID로 DELETE 시 404가 반환된다
 
 ---
 
