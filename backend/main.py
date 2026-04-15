@@ -1,9 +1,11 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
+from backend.routers import upload
 
 app = FastAPI(
     title="Receipt Expense Tracker API",
@@ -19,7 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 업로드 디렉토리 자동 생성
+# 디렉토리 자동 생성
 DATA_FILE_PATH = os.getenv("DATA_FILE_PATH", "backend/data/expenses.json")
 os.makedirs(os.path.dirname(DATA_FILE_PATH), exist_ok=True)
 os.makedirs("backend/uploads", exist_ok=True)
@@ -28,6 +30,9 @@ os.makedirs("backend/uploads", exist_ok=True)
 if not os.path.exists(DATA_FILE_PATH):
     with open(DATA_FILE_PATH, "w", encoding="utf-8") as f:
         f.write("[]")
+
+# 라우터 등록
+app.include_router(upload.router, prefix="/api")
 
 
 @app.get("/")
