@@ -5,7 +5,7 @@ import os
 
 load_dotenv()
 
-from backend.routers import upload
+from backend.routers import expenses, summary, upload
 
 app = FastAPI(
     title="Receipt Expense Tracker API",
@@ -33,6 +33,8 @@ if not os.path.exists(DATA_FILE_PATH):
 
 # 라우터 등록
 app.include_router(upload.router, prefix="/api")
+app.include_router(expenses.router, prefix="/api")
+app.include_router(summary.router, prefix="/api")
 
 
 @app.get("/")
