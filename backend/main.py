@@ -7,6 +7,8 @@ load_dotenv()
 
 from backend.routers import expenses, summary, upload
 
+_IS_VERCEL = bool(os.getenv("VERCEL"))
+
 app = FastAPI(
     title="Receipt Expense Tracker API",
     description="영수증 OCR 기반 지출 관리 API",
@@ -22,9 +24,16 @@ app.add_middleware(
 )
 
 # 디렉토리 자동 생성
-DATA_FILE_PATH = os.getenv("DATA_FILE_PATH", "backend/data/expenses.json")
-os.makedirs(os.path.dirname(DATA_FILE_PATH), exist_ok=True)
-os.makedirs("backend/uploads", exist_ok=True)
+DATA_FILE_PATH = os.getenv(
+    "DATA_FILE_PATH",
+    "/tmp/expenses.json" if _IS_VERCEL else "backend/data/expenses.json",
+)
+data_dir = os.path.dirname(DATA_FILE_PATH)
+if data_dir:
+    os.makedirs(data_dir, exist_ok=True)
+
+uploads_dir = "/tmp/uploads" if _IS_VERCEL else "backend/uploads"
+os.makedirs(uploads_dir, exist_ok=True)
 
 # expenses.json 초기화 (없을 경우)
 if not os.path.exists(DATA_FILE_PATH):
@@ -40,3 +49,11 @@ app.include_router(summary.router, prefix="/api")
 @app.get("/")
 def root():
     return {"message": "Receipt Expense Tracker API가 정상 실행 중입니다."}
+
+
+# Vercel 서버리스 핸들러
+try:
+    from mangum import Mangum
+    handler = Mangum(app, lifespan="off")
+except ImportError:
+    pass

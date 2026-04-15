@@ -3,7 +3,8 @@ import os
 import uuid
 from datetime import datetime, timezone
 
-DATA_FILE_PATH = os.getenv("DATA_FILE_PATH", "backend/data/expenses.json")
+_DEFAULT_PATH = "/tmp/expenses.json" if os.getenv("VERCEL") else "backend/data/expenses.json"
+DATA_FILE_PATH = os.getenv("DATA_FILE_PATH", _DEFAULT_PATH)
 
 
 def load_expenses() -> list:
@@ -14,7 +15,9 @@ def load_expenses() -> list:
 
 
 def save_expenses(data: list) -> None:
-    os.makedirs(os.path.dirname(DATA_FILE_PATH), exist_ok=True)
+    dir_path = os.path.dirname(DATA_FILE_PATH)
+    if dir_path:
+        os.makedirs(dir_path, exist_ok=True)
     with open(DATA_FILE_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
