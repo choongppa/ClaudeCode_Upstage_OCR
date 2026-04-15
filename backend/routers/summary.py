@@ -52,5 +52,6 @@ def get_summary(month: Optional[str] = None):
     return {
         "total_amount": total_amount,
         "this_month_amount": this_month_amount,
+        "total_count": len(filtered),
         "category_summary": category_summary,
     }
