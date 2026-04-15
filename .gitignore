@@ -1,0 +1,42 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# 환경변수 (절대 커밋 금지)
+.env
+.env.local
+backend/.env
+
+# 업로드 임시 파일
+backend/uploads/
+
+# Node.js
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Vercel
+.vercel/
+
+# Claude Code 로컬 설정 (개인 설정, 커밋 제외)
+.claude/settings.local.json
+.claude/memory/
+
+# 잘못 생성된 파일
+npm
